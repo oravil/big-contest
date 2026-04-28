@@ -1,8 +1,8 @@
-{
+﻿{
   "name": "bigShawerma-contest",
   "version": "1.0.0",
   "private": true,
-  "description": "Big Shawerma — Contest Prize Redemption System (خليك مع الكبير / انت الاهم)",
+  "description": "Big Shawerma â€” Contest Prize Redemption System (Ø®Ù„ÙŠÙƒ Ù…Ø¹ Ø§Ù„ÙƒØ¨ÙŠØ± / Ø§Ù†Øª Ø§Ù„Ø§Ù‡Ù…)",
   "scripts": {
     "seed": "node scripts/seed.js",
     "backend": "node backend/server.js",
@@ -10,7 +10,7 @@
     "frontend:install": "cd frontend && npm install",
     "dev": "concurrently -k -n backend,frontend -c yellow,cyan \"npm run backend\" \"npm run frontend\"",
     "build": "cd frontend && npm run build",
-    "start": "cross-env NODE_ENV=production node backend/server.js"
+    "start": "node backend/server.js"
   },
   "dependencies": {
     "cors": "^2.8.5",
@@ -24,3 +24,4 @@
     "node": ">=20"
   }
 }
+
