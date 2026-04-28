@@ -21,12 +21,14 @@ const { autoExpire, readData, writeData } = winnersModule;
 const router = express.Router();
 
 router.post('/', auth, (req, res) => {
-  const rawCode = (req.body && req.body.code) || '';
-  if (typeof rawCode !== 'string' || rawCode.trim().length === 0) {
-    return res.status(400).json({ error: 'الكود مطلوب' });
+  const rawInput = (req.body && req.body.code) || '';
+  if (typeof rawInput !== 'string' || rawInput.trim().length === 0) {
+    return res.status(400).json({ error: 'الكود أو رقم الهاتف مطلوب' });
   }
 
-  const code = rawCode.trim().toUpperCase();
+  // Detect if the user searched by phone (EG format: 01[0125]XXXXXXXX).
+  const normalizedPhone = rawInput.replace(/\D/g, '');
+  const isPhone = /^01[0125]\d{8}$/.test(normalizedPhone);
 
   let data;
   try {
@@ -35,9 +37,23 @@ router.post('/', auth, (req, res) => {
     return res.status(500).json({ error: 'خطأ في الخادم' });
   }
 
-  const winner = data.winners.find((w) => w.code === code);
+  let winner;
+  if (isPhone) {
+    // Phone search — prefer active prize, then expired, then redeemed.
+    const matches = data.winners.filter((w) => w.phone === normalizedPhone);
+    winner =
+      matches.find((w) => w.status === 'active') ||
+      matches.find((w) => w.status === 'expired') ||
+      matches[0];
+  } else {
+    const code = rawInput.trim().toUpperCase();
+    winner = data.winners.find((w) => w.code === code);
+  }
+
   if (!winner) {
-    return res.status(404).json({ error: 'الكود غير موجود' });
+    return res
+      .status(404)
+      .json({ error: isPhone ? 'رقم الهاتف غير موجود' : 'الكود غير موجود' });
   }
 
   // Compute expirations in memory only — do NOT write here. The admin's

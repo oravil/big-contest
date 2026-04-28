@@ -2,34 +2,46 @@
  * CodeLookupForm.jsx — Step 2 of the staff flow.
  *
  * Props:
- *  - onSubmit(code: string): called with the trimmed/uppercased code.
+ *  - onSubmit(value: string): called with the trimmed code or phone number.
  *  - loading: boolean — disables the button + shows a spinner while awaiting API.
  *  - error: string|null — Arabic error message displayed under the input.
  *
  * Behavior:
- *  - Auto-uppercases the input on every change.
- *  - Enforces maxLength of 12 (e.g. BIG-XXX-0000).
- *  - Submit button disabled until a non-empty code is present.
+ *  - Toggle between code mode and phone mode.
+ *  - Code mode: auto-uppercase, maxLength 12 (e.g. BIG-XXX-0000).
+ *  - Phone mode: numeric only, maxLength 11 (e.g. 01012345678).
  */
 
 import { useState } from 'react';
 
 export default function CodeLookupForm({ onSubmit, loading, error }) {
-  const [code, setCode] = useState('');
+  const [mode, setMode] = useState('code'); // 'code' | 'phone'
+  const [value, setValue] = useState('');
+
+  const isPhone = mode === 'phone';
 
   const handleChange = (e) => {
-    // Auto-uppercase everything the user types.
-    setCode(e.target.value.toUpperCase());
+    if (isPhone) {
+      // Digits only for phone.
+      setValue(e.target.value.replace(/\D/g, '').slice(0, 11));
+    } else {
+      setValue(e.target.value.toUpperCase());
+    }
+  };
+
+  const handleModeSwitch = (newMode) => {
+    setMode(newMode);
+    setValue('');
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const trimmed = code.trim();
+    const trimmed = value.trim();
     if (!trimmed || loading) return;
     onSubmit(trimmed);
   };
 
-  const canSubmit = code.trim().length > 0 && !loading;
+  const canSubmit = value.trim().length > 0 && !loading;
 
   return (
     <form
@@ -37,41 +49,74 @@ export default function CodeLookupForm({ onSubmit, loading, error }) {
       className="w-full max-w-lg mx-auto bg-bg-card rounded-2xl border border-brand-yellow/20 p-6 sm:p-8 shadow-xl"
     >
       <h2 className="text-2xl sm:text-3xl font-black text-brand-yellow text-center">
-        أدخل كود الجائزة
+        بحث عن الفائز
       </h2>
       <p className="mt-2 text-sm text-white/50 text-center">
-        ابحث عن كود الفائز للتحقق من الجائزة وتسليمها.
+        ابحث بكود الجائزة أو رقم هاتف الفائز.
       </p>
 
-      <div className="mt-6">
+      {/* Mode toggle */}
+      <div className="mt-5 flex rounded-xl overflow-hidden border border-brand-yellow/20 bg-bg-dark">
+        <button
+          type="button"
+          onClick={() => handleModeSwitch('code')}
+          className={[
+            'flex-1 py-2 text-sm font-bold transition-colors',
+            mode === 'code'
+              ? 'bg-brand-yellow text-brand-black'
+              : 'text-white/50 hover:text-white',
+          ].join(' ')}
+        >
+          🔑 كود الجائزة
+        </button>
+        <button
+          type="button"
+          onClick={() => handleModeSwitch('phone')}
+          className={[
+            'flex-1 py-2 text-sm font-bold transition-colors',
+            mode === 'phone'
+              ? 'bg-brand-yellow text-brand-black'
+              : 'text-white/50 hover:text-white',
+          ].join(' ')}
+        >
+          📱 رقم الهاتف
+        </button>
+      </div>
+
+      <div className="mt-5">
         <label
-          htmlFor="prize-code"
+          htmlFor="prize-lookup"
           className="block text-sm font-bold text-white/80 mb-2"
         >
-          كود الجائزة
+          {isPhone ? 'رقم هاتف الفائز' : 'كود الجائزة'}
         </label>
         <input
-          id="prize-code"
-          type="text"
-          inputMode="text"
+          id="prize-lookup"
+          key={mode}
+          type={isPhone ? 'tel' : 'text'}
+          inputMode={isPhone ? 'numeric' : 'text'}
           autoComplete="off"
           spellCheck={false}
           dir="ltr"
-          maxLength={12}
-          value={code}
+          maxLength={isPhone ? 11 : 12}
+          value={value}
           onChange={handleChange}
-          placeholder="BIG-WNR-4821"
+          placeholder={isPhone ? '01012345678' : 'BIG-WNR-4821'}
           className={[
-            'w-full px-4 py-3 rounded-xl bg-bg-dark text-white text-lg font-bold tracking-widest text-center',
+            'w-full px-4 py-3 rounded-xl bg-bg-dark text-white text-lg font-bold text-center',
             'border-2 outline-none transition-colors',
+            isPhone ? '' : 'tracking-widest',
             error
               ? 'border-status-expired animate-shake'
               : 'border-brand-yellow/40 focus:border-brand-yellow',
           ].join(' ')}
         />
         <p className="mt-2 text-xs text-white/40">
-          الكود مكوّن من حروف وأرقام بالتنسيق:{' '}
-          <span className="font-mono text-white/60">BIG-XXX-0000</span>
+          {isPhone ? (
+            <>رقم هاتف مصري من 11 رقمًا — مثال: <span className="font-mono text-white/60">01012345678</span></>
+          ) : (
+            <>الكود مكوّن من حروف وأرقام بالتنسيق: <span className="font-mono text-white/60">BIG-XXX-0000</span></>
+          )}
         </p>
 
         {error && (
