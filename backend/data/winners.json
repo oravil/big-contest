@@ -1,0 +1,105 @@
+{
+  "contest": {
+    "name_ar": "خليك مع الكبير / انت الاهم",
+    "name_en": "Stay With The Big — You Matter",
+    "start_date": "2026-04-16",
+    "end_date": "2026-04-22",
+    "active": false
+  },
+  "teams": {
+    "admin": {
+      "name_ar": "المدير",
+      "password": "BIG_ADMIN_2026"
+    },
+    "whatsapp": {
+      "name_ar": "خدمة عملاء واتساب",
+      "password": "BIG_WA_2026"
+    },
+    "phone": {
+      "name_ar": "خدمة عملاء هاتف",
+      "password": "BIG_PH_2026"
+    },
+    "hall": {
+      "name_ar": "استقبال الصالة",
+      "password": "BIG_HL_2026"
+    },
+    "takeaway": {
+      "name_ar": "تيك أواي",
+      "password": "BIG_TK_2026"
+    }
+  },
+  "winners": [
+    {
+      "id": "W001",
+      "name_ar": "علياء السيد",
+      "public_name_ar": "علياء ا",
+      "phone": "01096333377",
+      "code": "BIG-WDM-3576",
+      "prize_type": "grand_prize",
+      "prize_label_ar": "الجائزة الكبرى",
+      "prize_detail_ar": "صينية أنا وانت",
+      "terms_ar": "تُسلَّم الجائزة الكبرى بحضور الفائز شخصياً داخل الفرع مع إثبات الهوية.",
+      "min_order": null,
+      "max_order": null,
+      "delivery_zone": "شربين",
+      "branch": "sharbeen",
+      "branch_label_ar": "فرع شربين",
+      "rank": 1,
+      "rank_label_ar": "",
+      "expiry_date": "2026-04-30",
+      "status": "active",
+      "redeemed_at": null,
+      "redeemed_at_iso": null,
+      "redeemed_by_team": null,
+      "redeemed_by_team_ar": null
+    },
+    {
+      "id": "W002",
+      "name_ar": "موده ورحمه",
+      "public_name_ar": "موده",
+      "phone": "01096333366",
+      "code": "BIG-JES-9451",
+      "prize_type": "grand_prize",
+      "prize_label_ar": "الجائزة الكبرى",
+      "prize_detail_ar": "صينية أنا وانت",
+      "terms_ar": "تُسلَّم الجائزة الكبرى بحضور الفائز شخصياً داخل الفرع مع إثبات الهوية.",
+      "min_order": null,
+      "max_order": null,
+      "delivery_zone": "بلقاس",
+      "branch": "belqas",
+      "branch_label_ar": "فرع بلقاس",
+      "rank": 2,
+      "rank_label_ar": "2",
+      "expiry_date": "2026-04-30",
+      "status": "active",
+      "redeemed_at": null,
+      "redeemed_at_iso": null,
+      "redeemed_by_team": null,
+      "redeemed_by_team_ar": null
+    },
+    {
+      "id": "W003",
+      "name_ar": "Mamet mazen",
+      "public_name_ar": "+.-Mamet M",
+      "phone": "01095333377",
+      "code": "BIG-FKN-2846",
+      "prize_type": "grand_prize",
+      "prize_label_ar": "الجائزة الكبرى",
+      "prize_detail_ar": "",
+      "terms_ar": "تُسلَّم الجائزة الكبرى بحضور الفائز شخصياً داخل الفرع مع إثبات الهوية.",
+      "min_order": null,
+      "max_order": null,
+      "delivery_zone": null,
+      "branch": "belqas",
+      "branch_label_ar": "فرع بلقاس",
+      "rank": 3,
+      "rank_label_ar": "",
+      "expiry_date": "2026-04-30",
+      "status": "active",
+      "redeemed_at": null,
+      "redeemed_at_iso": null,
+      "redeemed_by_team": null,
+      "redeemed_by_team_ar": null
+    }
+  ]
+}

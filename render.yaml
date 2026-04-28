@@ -1,0 +1,27 @@
+# Render.com Blueprint — one-click deploy of the Big Shawerma backend.
+# After connecting this repo at https://render.com/, click "Apply" on this
+# blueprint. Then set the FRONTEND_URL env var to your Vercel domain.
+#
+# Docs: https://render.com/docs/blueprint-spec
+
+services:
+  - type: web
+    name: big-shawerma-api
+    runtime: node
+    plan: free
+    region: frankfurt
+    rootDir: contest
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DATA_PATH
+        value: /var/data/winners.json
+      - key: FRONTEND_URL
+        sync: false # set this in the Render dashboard after the Vercel deploy
+    disk:
+      name: data
+      mountPath: /var/data
+      sizeGB: 1
