@@ -9,7 +9,9 @@
  *  - Title with brand-gold gradient + animated subtitle + scroll hint.
  */
 
-export default function HeroSection() {
+export default function HeroSection({ contestActive }) {
+  const isActive = contestActive !== false; // default to active when unknown
+
   return (
     <section
       className="relative w-full overflow-hidden bg-brand-black flex items-center"
@@ -54,9 +56,25 @@ export default function HeroSection() {
         {/* Text block */}
         <div className="animate-fade-in-up text-center lg:text-right order-2 lg:order-1">
           {/* Trust chip */}
-          <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[11px] sm:text-xs font-bold text-status-active border border-status-active/40 bg-status-active/10">
-            <span className="inline-block w-1.5 h-1.5 rounded-full bg-status-active animate-pulse" />
-            <span>المسابقة فعّالة — نتائج رسمية</span>
+          <span
+            className={[
+              'inline-flex items-center gap-2 px-3 py-1 rounded-full text-[11px] sm:text-xs font-bold border',
+              isActive
+                ? 'text-status-active border-status-active/40 bg-status-active/10'
+                : 'text-white/50 border-white/20 bg-white/5',
+            ].join(' ')}
+          >
+            <span
+              className={[
+                'inline-block w-1.5 h-1.5 rounded-full',
+                isActive ? 'bg-status-active animate-pulse' : 'bg-white/30',
+              ].join(' ')}
+            />
+            <span>
+              {isActive
+                ? 'المسابقة فعّالة — نتائج رسمية'
+                : 'المسابقة انتهت — نتائج رسمية'}
+            </span>
           </span>
 
           <h1

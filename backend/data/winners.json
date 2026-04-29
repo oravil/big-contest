@@ -4,7 +4,7 @@
     "name_en": "Stay With The Big — You Matter",
     "start_date": "2026-04-16",
     "end_date": "2026-04-22",
-    "active": false
+    "active": true
   },
   "teams": {
     "admin": {
@@ -95,6 +95,30 @@
       "rank": 3,
       "rank_label_ar": "",
       "expiry_date": "2026-04-30",
+      "status": "active",
+      "redeemed_at": null,
+      "redeemed_at_iso": null,
+      "redeemed_by_team": null,
+      "redeemed_by_team_ar": null
+    },
+    {
+      "id": "W004",
+      "name_ar": "ahmed",
+      "public_name_ar": "ahmed",
+      "phone": "01055552566",
+      "code": "BIG-KCR-6561",
+      "prize_type": "discount_coupon",
+      "prize_label_ar": "كوبون خصم",
+      "prize_detail_ar": "50 جنيه",
+      "terms_ar": "كوبون خصم صالح لمرة واحدة. لا يُجمع مع أي عرض آخر.",
+      "min_order": null,
+      "max_order": null,
+      "delivery_zone": "شربين",
+      "branch": "sharbeen",
+      "branch_label_ar": "فرع شربين",
+      "rank": 4,
+      "rank_label_ar": "الرابع",
+      "expiry_date": "2026-05-15",
       "status": "active",
       "redeemed_at": null,
       "redeemed_at_iso": null,

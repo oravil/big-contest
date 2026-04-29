@@ -62,6 +62,10 @@ function Dashboard({ auth, onLogout }) {
   const [tab, setTab] = useState('winners'); // 'winners' | 'teams'
   const [topError, setTopError] = useState(null);
 
+  // Contest settings
+  const [contest, setContest] = useState(null);
+  const [contestBusy, setContestBusy] = useState(false);
+
   // Winners data
   const [winners, setWinners] = useState([]);
   const [winnersLoading, setWinnersLoading] = useState(true);
@@ -163,6 +167,11 @@ function Dashboard({ auth, onLogout }) {
   useEffect(() => {
     loadWinners();
     loadTeams();
+
+    // Load contest settings
+    apiFetch('/contest')
+      .then((data) => setContest(data.contest || null))
+      .catch(() => {/* non-critical, ignore */});
   }, [loadWinners, loadTeams]);
 
   // ---------- Winner actions ----------
@@ -270,6 +279,26 @@ function Dashboard({ auth, onLogout }) {
     }
   };
 
+  // ---------- Contest actions ----------
+
+  const toggleContest = async () => {
+    const next = !(contest?.active ?? true);
+    setContestBusy(true);
+    try {
+      const data = await apiFetch('/contest', {
+        method: 'PUT',
+        body: JSON.stringify({ active: next }),
+      });
+      setContest(data.contest || null);
+    } catch (err) {
+      if (err.message !== 'UNAUTHORIZED') {
+        setTopError(err.message || 'تعذّر تحديث حالة المسابقة');
+      }
+    } finally {
+      setContestBusy(false);
+    }
+  };
+
   // ---------- Team actions ----------
 
   const updateTeam = async (key, patch) => {
@@ -366,6 +395,23 @@ function Dashboard({ auth, onLogout }) {
             >
               الصفحة العامة ↗
             </Link>
+            <button
+              type="button"
+              disabled={contestBusy}
+              onClick={toggleContest}
+              className={[
+                'px-3 py-1.5 rounded-lg text-xs font-bold transition-colors disabled:opacity-50',
+                contest?.active
+                  ? 'bg-status-active/15 text-status-active border border-status-active/30 hover:bg-status-expired/15 hover:text-status-expired hover:border-status-expired/30'
+                  : 'bg-status-expired/15 text-status-expired border border-status-expired/30 hover:bg-status-active/15 hover:text-status-active hover:border-status-active/30',
+              ].join(' ')}
+            >
+              {contestBusy
+                ? '...'
+                : contest?.active
+                ? '🟢 فعّالة'
+                : '🔴 منتهية'}
+            </button>
             <button
               type="button"
               onClick={onLogout}

@@ -85,7 +85,7 @@ export default function PublicPage() {
   return (
     <div id="top" className="min-h-screen bg-bg-dark text-white">
       <Navbar />
-      <HeroSection />
+      <HeroSection contestActive={contest?.active} />
       <StatsBar winners={winners} />
 
       <section

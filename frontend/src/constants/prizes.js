@@ -187,6 +187,40 @@ export const PRIZES = {
     is_top_tier: false,
   },
 
+  discount_coupon: {
+    type: 'discount_coupon',
+    label_ar: 'كوبون خصم',
+    short_label_ar: 'كوبون خصم',
+    badge_ar: '🎟️ كوبون خصم',
+    default_detail_ar: '',
+    Icon: IconDiscount,
+    emoji: '🎟️',
+
+    icon_bg: 'bg-gradient-to-br from-violet-400 to-violet-700',
+    icon_text: 'text-white',
+    accent_gradient: 'from-violet-400/80 via-violet-300/40 to-violet-500/0',
+    card_gradient:
+      'from-violet-500/[0.08] via-violet-400/[0.03] to-transparent',
+    border: 'border-violet-400/40',
+    ring: 'ring-violet-400/30',
+    glow: 'shadow-[0_0_24px_rgba(139,92,246,0.18)]',
+    chip_bg: 'bg-violet-500/15',
+    chip_text: 'text-violet-300',
+    chip_border: 'border-violet-400/40',
+    color_hex: '#8B5CF6',
+
+    min_order: null,
+    max_order: null,
+    requires_delivery_zone: false,
+    excludes_delivery: true,
+
+    default_terms_ar:
+      'كوبون خصم صالح لمرة واحدة. لا يُجمع مع أي عرض آخر.',
+
+    hide_rank: false,
+    is_top_tier: false,
+  },
+
   free_delivery: {
     type: 'free_delivery',
     label_ar: 'توصيل مجاني',
@@ -229,6 +263,7 @@ export const PRIZE_ORDER = [
   'discount_30',
   'discount_20',
   'discount_10',
+  'discount_coupon',
   'free_delivery',
 ];
 

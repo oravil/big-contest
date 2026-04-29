@@ -532,6 +532,44 @@ router.delete('/teams/:key', async (req, res) => {
   return res.json({ ok: true });
 });
 
+// GET /contest — get contest settings.
+router.get('/contest', (req, res) => {
+  let data;
+  try {
+    data = readData();
+  } catch (err) {
+    return res.status(500).json({ error: 'خطأ في الخادم' });
+  }
+  return res.json({ contest: data.contest || {} });
+});
+
+// PUT /contest — update contest active status.
+router.put('/contest', async (req, res) => {
+  const { active } = req.body || {};
+
+  if (typeof active !== 'boolean') {
+    return res.status(400).json({ error: 'قيمة active يجب أن تكون true أو false' });
+  }
+
+  let data;
+  try {
+    data = readData();
+  } catch (err) {
+    return res.status(500).json({ error: 'خطأ في الخادم' });
+  }
+
+  data.contest = data.contest || {};
+  data.contest.active = active;
+
+  try {
+    await safeWrite(data);
+  } catch (err) {
+    return res.status(500).json({ error: 'تعذّر حفظ إعدادات المسابقة' });
+  }
+
+  return res.json({ contest: data.contest });
+});
+
 // GET /export — download the full winners.json as an attachment.
 router.get('/export', (req, res) => {
   let raw;
